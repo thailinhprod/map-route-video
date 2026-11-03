@@ -13,7 +13,15 @@
 ## Ảnh vệ tinh
 Skill không kèm công cụ tải ảnh vệ tinh, vì nhiều dịch vụ cấm thu thập tile hàng loạt, lưu lại hoặc dùng trong sản phẩm thương mại. Ví dụ tài liệu tóm tắt điều khoản của Esri không cho thu thập tile có hệ thống ngoài Content Packages và không cho tải về, phân phối lại hay tự lưu trữ nội dung do Esri host.
 
-Đừng ghép tile từ một dịch vụ nếu chưa đọc điều khoản của dịch vụ đó. Hãy hỏi người dùng ảnh đến từ đâu và ghi nguồn đúng theo giấy phép. Ảnh phải căn theo lưới tile Web Mercator để khớp toạ độ. Không có ảnh hợp lệ thì dùng kiểu `osm`.
+Đừng ghép tile từ một dịch vụ nếu chưa đọc điều khoản của dịch vụ đó. Hãy hỏi người dùng ảnh đến từ đâu và ghi nguồn đúng theo giấy phép. Dùng `scripts/prepare_imagery.py` để căn ảnh theo toạ độ. Không có ảnh hợp lệ thì dùng kiểu `osm`.
+
+| Nguồn | Hợp với | Lưu ý |
+|---|---|---|
+| Flycam của người dùng | Cận cảnh khu đất | Cần ảnh nhìn thẳng xuống, chỉnh về hướng bắc, biết toạ độ bốn mép. |
+| Ảnh mua từ nhà cung cấp | Mọi cảnh | Phải đọc giấy phép về video và quảng cáo. |
+| OpenAerialMap | Nơi có ảnh | CC BY 4.0, cần ghi nguồn. Điều khoản không nói rõ về thương mại. |
+| Sentinel-2 cloudless (EOX) | Cảnh toàn khu | Khoảng 10 m/điểm ảnh. Dịch vụ miễn phí chỉ cho phi thương mại, thương mại cần giấy phép của EOX. |
+| Google Earth Studio | Không dùng cho quảng cáo | Google không cấp giấy phép cho ứng dụng thương mại. |
 
 ## Khi mạng bị chặn
 Môi trường chạy code thường chặn các host trên. Thử theo thứ tự: gọi trực tiếp, công cụ đọc web của phiên làm việc, rồi trình duyệt của người dùng. Trình duyệt thường mở được OSRM, OpenFreeMap và Photon. Luôn xin phép trước khi tải file về máy người dùng.

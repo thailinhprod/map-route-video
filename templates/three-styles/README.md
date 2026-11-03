@@ -10,6 +10,6 @@ python3 render3.py osm scene.json out 1.2,5.5,9.5   # chỉ xuất ảnh tĩnh �
 
 - Đường dẫn file trong `scene.json` tính từ thư mục chứa `scene.json`.
 - Kiểu neon và osm cần `osm_tiles` (tạo bằng `scripts/openfreemap_tiles.browser.js`). Thiếu file này thì nền trống.
-- Kiểu satellite cần `satellite` và `credit`. Ảnh phải căn đúng lưới tile Web Mercator; `x`, `y`, `z` là tile góc trên trái. Renderer dừng nếu thiếu `credit`.
+- Kiểu satellite cần `satellite` và `credit`. Tạo đoạn `satellite` bằng `scripts/prepare_imagery.py`. Renderer dừng nếu thiếu `credit`.
 - Màu từng phong cách nằm trong `STYLES` đầu file.
 - `example_scene.json` có tuyến thật nhưng không kèm dữ liệu nền.

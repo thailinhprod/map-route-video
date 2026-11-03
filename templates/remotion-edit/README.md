@@ -4,7 +4,7 @@
 
 ## Chạy
 1. `npm install`
-2. Chép vào `public/`: `source.mp4`, ảnh cận cảnh `sat_local.jpg`, ảnh toàn cảnh `sat_wide.jpg`. Ảnh phải là ảnh bạn có quyền dùng và căn đúng lưới tile Web Mercator.
+2. Chép vào `public/`: `source.mp4`, ảnh cận cảnh `sat_local.jpg`, ảnh toàn cảnh `sat_wide.jpg`. Ảnh phải là ảnh bạn có quyền dùng. Chạy `scripts/prepare_imagery.py` để lấy giá trị cho `maps`.
 3. Tạo một thư mục dữ liệu gồm:
    - `job.json`: chép từ `job.example.json` rồi sửa; `maps` khai báo z, x0, y0, w, h của từng ảnh.
    - `gaps.json`: kết quả của `scripts/silence_cut.py`.

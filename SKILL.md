@@ -25,7 +25,7 @@ Thêm mốc giây làm tham số thứ 4 (`... out 1.2,5.5,9.5`) để xuất �
 1. **Toạ độ:** dùng `scripts/photon_geocode.browser.js`, không tự nhớ toạ độ.
 2. **Tuyến:** dùng OSRM, giữ khoảng cách và thời gian. Thời gian luôn ghi là ước tính khi đường thông thoáng, không tự bịa tốc độ.
 3. **Nền OSM:** mở `https://tiles.openfreemap.org/planet`, chạy `scripts/openfreemap_tiles.browser.js` sau khi xin phép tải file. Khoảng 24 tile z14 nặng 3,4 MB cho vùng 12 × 8 km.
-4. **Ảnh vệ tinh:** hỏi người dùng nguồn ảnh và quyền sử dụng. Không tự ghép tile từ dịch vụ bản đồ. Không có ảnh hợp lệ thì đề xuất kiểu `osm`.
+4. **Ảnh vệ tinh hoặc flycam:** hỏi người dùng nguồn ảnh và quyền sử dụng, xem bảng nguồn trong `references/data-sourcing.md`. Không tự ghép tile từ dịch vụ bản đồ. Ảnh nhìn thẳng, hướng bắc ở trên, có toạ độ bốn mép thì chạy `scripts/prepare_imagery.py` và dán đoạn JSON nó in ra vào `satellite` của `scene.json` hoặc `maps` của `job.json`. Không có ảnh hợp lệ thì đề xuất kiểu `osm`.
 5. **Địa chỉ trên thẻ chữ:** hỏi lại người dùng. Sau sáp nhập 7/2025, tên trên bản đồ và tên họ dùng có thể khác nhau. Dùng tên cũ thì ghi "(cũ)".
 
 ## 2. Viết `scene.json`
@@ -37,13 +37,15 @@ Mẫu: `templates/three-styles/example_scene.json`.
 - `home_label`, `home_sub`, `dest_label`, `dest_sub`, `note`.
 - `pois`: `{name, kind, ll, side}`, với kind là tower, mall, metro, hospital, bridge, city hoặc stadium; side là r, l, t hoặc b. Khung cuối tự mở rộng để chứa mọi điểm, nên chỉ chọn 5–7 điểm gần tuyến.
 - `osm_tiles`: file từ `openfreemap_tiles.browser.js`.
-- `satellite`: `[{file, x, y, z}]`, với x, y là tile góc trên trái. Tấm z thấp nhất làm nền và giới hạn camera. Tấm phủ phải đủ lớn cho khung dọc ở tỉ lệ toàn tuyến, nếu không sẽ lộ viền đen.
+- `satellite`: `[{file, x, y, z}]`, với x, y là tile góc trên trái (được phép lẻ). Tấm z thấp nhất làm nền và giới hạn camera. Tấm phủ phải đủ lớn cho khung dọc ở tỉ lệ toàn tuyến, nếu không sẽ lộ viền đen.
 - `credit`: bắt buộc với kiểu satellite, ghi đúng nguồn ảnh.
 - `skip_places`: nhãn muốn ẩn.
 - `style_tag`: chữ nhỏ ở góc, chỉ dùng khi so sánh phong cách.
 
 ## 3. Edit clip môi giới
-Làm theo `templates/remotion-edit/README.md`. Mọi chữ và mốc thời gian nằm trong `job.json`.
+Làm theo `templates/remotion-edit/README.md`. Mọi chữ và mốc thời gian nằm trong `job.json`. Template đã đủ để chạy. Nếu phiên làm việc có skill Remotion, đọc thêm khi cần chỉnh cảnh; nếu chưa có, người dùng có thể cài bằng `npx skills add remotion-dev/skills`.
+
+Trước khi dùng cho công ty, nhắc người dùng: Remotion miễn phí cho cá nhân và tổ chức từ 3 người trở xuống; công ty lớn hơn cần Company License.
 
 1. **Phiên âm:** `scripts/transcribe_vi.py`. Sửa tay tên riêng. **Hỏi lại mọi con số** trước khi đưa lên thẻ.
 2. **Cắt lặng:** `scripts/silence_cut.py`, dò theo năng lượng âm thanh vì Whisper hay gộp khoảng lặng vào từ đứng trước. Khai báo overlay theo thời gian gốc để sửa lời không làm lệch cảnh.
