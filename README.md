@@ -1,6 +1,8 @@
 # Map Route Video — Video bản đồ tracking cho môi giới BĐS
 
-**Skill cho Claude giúp môi giới bất động sản tạo video dọc 9:16 (Reels/TikTok/Shorts) có bản đồ tuyến đường tự vẽ, và edit clip giới thiệu nhà tự quay.** Bạn chỉ cần nói điểm đi, điểm đến. Claude lo phần tìm dữ liệu, dựng hình và xuất MP4.
+**Skill cho AI giúp môi giới bất động sản tạo video dọc 9:16 (Reels/TikTok/Shorts) có bản đồ tuyến đường tự vẽ, và edit clip giới thiệu nhà tự quay.** Bạn chỉ cần nói điểm đi, điểm đến. AI lo phần tìm dữ liệu, dựng hình và xuất MP4.
+
+Dùng được với các AI agent chạy được code và đọc được chuẩn `SKILL.md`, như Claude Code, Codex, Cursor, Gemini CLI. Với ChatGPT có chạy code, dùng [prompt dựng sẵn](references/prompt-chatgpt-hyperframes.md).
 
 ![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
 [![Remotion License](https://img.shields.io/badge/Remotion-xem%20gi%E1%BA%A5y%20ph%C3%A9p-blue.svg)](https://www.remotion.dev/docs/license/faq)
@@ -82,7 +84,7 @@ Skill **không kèm ảnh và không tự tải ảnh**, vì nhiều dịch vụ
 
 ```
 map-route-video/
-├── SKILL.md                     ← hướng dẫn Claude đọc khi chạy skill
+├── SKILL.md                     ← hướng dẫn AI đọc khi chạy skill
 ├── README.md, LICENSE           ← bạn đang ở đây
 ├── docs/                        ← GIF và ảnh dùng trong README
 ├── references/
@@ -101,7 +103,7 @@ map-route-video/
 
 ## 🧰 Yêu cầu hệ thống
 
-1. **Claude có chạy được code**, ví dụ Claude Code hoặc ứng dụng Claude có tính năng tạo file. Claude cần mở được nguồn bản đồ, trực tiếp hoặc qua trình duyệt.
+1. **Một AI chạy được code và tạo được file**, ví dụ Claude Code, Codex, Cursor, Gemini CLI. AI cần mở được nguồn bản đồ, trực tiếp hoặc qua trình duyệt.
 2. **Python 3** — tải tại [python.org](https://www.python.org/downloads/).
 3. **FFmpeg** trong `PATH` — tải tại [ffmpeg.org](https://ffmpeg.org/download.html).
 4. **Thư viện Python:** `pip install pycairo mapbox-vector-tile pillow`.
@@ -117,15 +119,28 @@ Chỉ cần edit clip thì cài thêm:
 
 ### 1. Cài skill
 
-**Claude Code:**
+**Cách nhanh cho nhiều AI agent** (cần Node.js 22.20 trở lên). Công cụ [skills](https://github.com/vercel-labs/skills) sẽ hỏi bạn muốn cài cho AI nào:
 
 ```bash
-git clone https://github.com/thailinhprod/map-route-video.git ~/.claude/skills/map-route-video
+npx skills add thailinhprod/map-route-video -g
 ```
+
+**Hoặc tự chép thư mục** vào nơi AI của bạn đọc skill:
+
+| AI | Thư mục |
+| --- | --- |
+| Claude Code | `~/.claude/skills/map-route-video/` |
+| Codex | `~/.codex/skills/map-route-video/` |
+| Cursor | `~/.cursor/skills/map-route-video/` |
+| Gemini CLI | `~/.gemini/skills/map-route-video/` |
+
+Các thư mục trên có thể đổi theo phiên bản, hãy đối chiếu với tài liệu của từng công cụ.
 
 **Ứng dụng Claude:** tải repo dạng ZIP rồi thêm vào phần Skills.
 
-Muốn Claude hiểu Remotion sâu hơn khi tự chỉnh cảnh, cài thêm [skill chính thức của Remotion](https://www.remotion.dev/docs/ai/skills). Bước này không bắt buộc.
+**ChatGPT hoặc AI không hỗ trợ skill:** dán [prompt dựng sẵn](references/prompt-chatgpt-hyperframes.md) vào cuộc chat có chạy code. Prompt này dựng bằng HyperFrames, chủ yếu cho edit clip.
+
+Muốn AI hiểu Remotion sâu hơn khi tự chỉnh cảnh, cài thêm [skill chính thức của Remotion](https://www.remotion.dev/docs/ai/skills). Bước này không bắt buộc.
 
 ```bash
 npx skills add remotion-dev/skills
@@ -133,13 +148,13 @@ npx skills add remotion-dev/skills
 
 ### 2. Tạo video bản đồ
 
-Nhắn cho Claude như nói chuyện bình thường:
+Nhắn cho AI như nói chuyện bình thường:
 
 ```
 Làm video bản đồ từ Chợ Bến Thành đến Landmark 81, kiểu nền tối.
 ```
 
-Claude sẽ tìm toạ độ, lấy tuyến, tải dữ liệu bản đồ (có hỏi trước khi tải file) rồi xuất MP4.
+AI sẽ tìm toạ độ, lấy tuyến, tải dữ liệu bản đồ (có hỏi trước khi tải file) rồi xuất MP4.
 
 ### 3. Dùng ảnh vệ tinh hoặc flycam
 
@@ -157,11 +172,11 @@ Tôi có quyền dùng ảnh, ghi nguồn là: Ảnh: Tên của bạn.
 thẻ thông số và cảnh bản đồ. Giá và diện tích tôi xác nhận như sau: ...
 ```
 
-Clip đưa vào phải là clip bạn có quyền dùng. Claude sẽ hỏi lại mọi con số trước khi đưa lên video.
+Clip đưa vào phải là clip bạn có quyền dùng. Skill yêu cầu AI hỏi lại mọi con số trước khi đưa lên video.
 
 ### 5. Chạy thủ công
 
-Không dùng Claude cũng render được nếu bạn đã có `scene.json` và dữ liệu nền:
+Không dùng AI cũng render được nếu bạn đã có `scene.json` và dữ liệu nền:
 
 ```bash
 cd templates/three-styles
@@ -175,7 +190,8 @@ Mẫu ở [`example_scene.json`](templates/three-styles/example_scene.json). Ph�
 
 ## ⚠️ Giới hạn cần biết
 
-- **Bản Claude chỉ chat là chưa đủ**, vì skill cần chạy code và xuất file.
+- **AI chỉ chat là chưa đủ**, vì skill cần chạy code và xuất file. Bản miễn phí của nhiều AI thường chỉ trả lời bằng chữ.
+- **Mình mới chạy thực tế trên Claude.** Các AI khác dùng cùng định dạng skill nhưng chưa được thử, nếu gặp lỗi bạn báo trong group hoặc mở issue nhé.
 - **Thời gian di chuyển là ước tính** khi đường thông thoáng, chưa tính kẹt xe.
 - **Ghim có thể là vị trí tương đối** nếu số hẻm không có trên bản đồ. Video sẽ ghi rõ điều này.
 - **Chưa có chế độ quy hoạch.** Lớp quy hoạch không có trong OpenStreetMap.
