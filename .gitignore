@@ -1,0 +1,12 @@
+node_modules/
+out/
+__pycache__/
+*.pyc
+.DS_Store
+*.mp4
+*.mov
+templates/remotion-edit/public/
+templates/remotion-edit/src/edit.json
+osm_*tiles*.json
+imagery_*
+*.skill

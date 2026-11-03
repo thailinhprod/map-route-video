@@ -1,0 +1,44 @@
+{
+  "source": {"start": 0.2, "end": 19.8, "duration": 20.0},
+  "headRanges": [[0, 5], [9, 20]],
+  "captions": [
+    [0.3, 2.0, "Căn nhà mẫu trong *ví dụ*"],
+    [2.0, 5.0, "Thay toàn bộ chữ bằng *thông tin đã xác nhận*"],
+    [5.0, 9.0, "Bản đồ hiện đúng lúc nói *vị trí*"],
+    [9.0, 13.0, "Thẻ thông số hiện đúng lúc nói *số liệu*"],
+    [13.0, 19.5, "Cuối video là *giá* và lời mời liên hệ"]
+  ],
+  "overlays": {
+    "hook": [0.2, 3.0],
+    "mapA": [3.2, 6.0],
+    "broll1": [6.0, 7.0, 6.0],
+    "broll2": [7.0, 8.0, 7.0, 0.5],
+    "specs": [[9.0, "00 m²", "DIỆN TÍCH"], [10.0, "0 tầng", "KẾT CẤU"]],
+    "specsEnd": 11.0,
+    "chipSync": [11.0, 11.8, "CHIP THÔNG TIN"],
+    "mapB": [11.8, 13.0],
+    "mapC": [13.0, 15.0],
+    "mapD": [15.0, 16.0],
+    "price": [16.5, 18.0],
+    "endStart": 18.2
+  },
+  "axisPoint": [106.7553, 10.8074],
+  "maps": {
+    "local": {"img": "sat_local.jpg", "z": 17, "x0": 0, "y0": 0, "w": 1536, "h": 1792},
+    "wide": {"img": "sat_wide.jpg", "z": 15, "x0": 0, "y0": 0, "w": 3328, "h": 2560}
+  },
+  "attribution": "Ghi nguồn ảnh theo giấy phép · Tuyến: OSRM © OpenStreetMap",
+  "labels": {
+    "a": {"title": "Tên địa điểm", "sub": "PHƯỜNG · TỈNH", "kicker": "VỊ TRÍ", "big": "Tên khu vực", "note": "Ghim thể hiện vị trí tương đối"},
+    "b": {"title": "~00 m ra mặt đường", "sub": "TÊN ĐƯỜNG", "kicker": "TIỆN DI CHUYỂN", "big": "Sát trục chính"},
+    "c": {"titleA": "Điểm đến A", "titleB": "Điểm đến B", "kicker": "KẾT NỐI", "big": "Về điểm A, điểm B", "note": "Thời gian ước tính khi đường thông thoáng, chưa tính kẹt xe"},
+    "d": {"title": "Tên trục đường", "sub": "NÊU Ý CHÍNH ĐÃ XÁC NHẬN", "kicker": "HẠ TẦNG", "big": "Trục cần nhấn"}
+  },
+  "content": {
+    "hook": {"chip": "LOẠI HÌNH · KHU VỰC", "line1": "Dòng tiêu đề 1", "line2": "Dòng tiêu đề 2", "summary": "M² · ĐẶC ĐIỂM · GIÁ"},
+    "chips": {"broll": "CHIP CẢNH B-ROLL", "afterMap": "CHIP SAU BẢN ĐỒ"},
+    "price": {"kicker": "NGÂN SÁCH", "value": "Giá", "sub": "Dòng tóm tắt"},
+    "end": {"kicker": "ĐỊA CHỈ · KHU VỰC", "line1": "Tiêu đề kết", "line2": "giá", "chips": ["Thông số 1", "Thông số 2"], "cta": "Liên hệ đi xem nhà →"},
+    "compare": {"title": "AI tự edit", "accent": "100%", "cta": "Dòng kêu gọi hành động"}
+  }
+}

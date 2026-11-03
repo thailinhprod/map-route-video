@@ -1,0 +1,21 @@
+{
+  "name": "map-route-video-edit",
+  "private": true,
+  "version": "1.0.0",
+  "scripts": {
+    "render": "remotion render"
+  },
+  "dependencies": {
+    "@fontsource/dancing-script": "^5.3.0",
+    "@fontsource/inter": "5.2.8",
+    "@remotion/cli": "4.0.534",
+    "@remotion/media": "4.0.534",
+    "react": "19.2.0",
+    "react-dom": "19.2.0",
+    "remotion": "4.0.534"
+  },
+  "devDependencies": {
+    "@types/react": "19.2.2",
+    "typescript": "5.9.3"
+  }
+}
