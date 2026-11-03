@@ -1,107 +1,202 @@
-# Map Route Video
+# Map Route Video — Video bản đồ tracking cho môi giới BĐS
 
-**Skill cho Claude giúp môi giới bất động sản làm video bản đồ dọc 9:16 và edit clip giới thiệu nhà, không cần biết dựng video.**
+**Skill cho Claude giúp môi giới bất động sản tạo video dọc 9:16 (Reels/TikTok/Shorts) có bản đồ tuyến đường tự vẽ, và edit clip giới thiệu nhà tự quay.** Bạn chỉ cần nói điểm đi, điểm đến. Claude lo phần tìm dữ liệu, dựng hình và xuất MP4.
 
-Khách mua nhà luôn hỏi: nhà nằm đâu, ra đường lớn bao xa, về trung tâm mất bao lâu? Thay vì gửi một định vị Google Maps, bạn đưa cho Claude hai địa điểm và nhận về một video 10 giây có tuyến đường tự vẽ.
+![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)
+[![Remotion License](https://img.shields.io/badge/Remotion-xem%20gi%E1%BA%A5y%20ph%C3%A9p-blue.svg)](https://www.remotion.dev/docs/license/faq)
+![Python](https://img.shields.io/badge/python-3.x-brightgreen)
+![Map data](https://img.shields.io/badge/map%20data-OpenStreetMap-7ebc6f)
+![PRs welcome](https://img.shields.io/badge/PRs-welcome-ff4fa3.svg)
+[![Facebook Group](https://img.shields.io/badge/Facebook-Group%20h%E1%BB%97%20tr%E1%BB%A3-1877F2)](https://www.facebook.com/groups/1408241059869300/)
 
-Tác giả: [Thái Linh](https://facebook.com/thailinhprod) · Hỗ trợ: [Group Facebook](https://www.facebook.com/groups/1408241059869300/)
+Nếu skill có ích, cho mình xin một ⭐ để nhiều anh chị trong nghề biết đến hơn nhé.
 
-## Demo
+## Mục lục
 
-Hai video dưới đây dùng cùng một tuyến, cùng chuyển động camera.
+- [Xem trước](#-xem-trước)
+- [Vì sao có skill này](#-vì-sao-có-skill-này)
+- [Tính năng nổi bật](#-tính-năng-nổi-bật)
+- [Ba phong cách bản đồ](#-ba-phong-cách-bản-đồ)
+- [Cấu trúc repo](#-cấu-trúc-repo)
+- [Yêu cầu hệ thống](#-yêu-cầu-hệ-thống)
+- [Bắt đầu](#-bắt-đầu)
+- [Giới hạn cần biết](#-giới-hạn-cần-biết)
+- [Đóng góp](#-đóng-góp)
+- [Xem thêm](#-xem-thêm)
+- [License](#-license)
+
+## 🎬 Xem trước
 
 | Neon tối | Bản đồ sáng |
-|---|---|
-| ![Demo neon](docs/demo_neon.gif) | ![Demo bản đồ sáng](docs/demo_osm.gif) |
+| --- | --- |
+| ![Demo phong cách neon tối](docs/demo_neon.gif) | ![Demo phong cách bản đồ sáng](docs/demo_osm.gif) |
 
-Bản mp4 render ở 1080×1920, 30 fps. GIF đã được thu nhỏ để tải nhanh. Tuyến mẫu: Vincom Mega Mall → The Global City, dữ liệu OpenStreetMap, thời gian là ước tính của OSRM.
+Hai video dùng chung một tuyến và một chuyển động camera, chỉ đổi phong cách. GIF đã thu nhỏ để tải nhanh, bản MP4 thật là 1080×1920, 30 fps, dài 10 giây.
 
-## Video diễn ra thế nào
+Mỗi video đi qua 3 nhịp: cận cảnh điểm xuất phát, vẽ tuyến với camera bám theo, rồi lùi ra toàn tuyến để hiện km và thời gian.
 
-![Ba nhịp của video](docs/steps_osm.jpg)
+![Ba nhịp của một video bản đồ](docs/steps_osm.jpg)
 
-1. **Mở đầu:** cận cảnh điểm xuất phát, ghim và nhãn tên.
-2. **Vẽ tuyến:** camera bám đầu tuyến, địa điểm nổi tiếng hiện dần khi đi ngang qua.
-3. **Kết:** lùi ra toàn tuyến, hiện điểm đến, km và thời gian.
+Tuyến mẫu: Vincom Mega Mall → The Global City. Dữ liệu từ OpenStreetMap, thời gian là ước tính của OSRM.
 
-## Tính năng
+## 💡 Vì sao có skill này
 
-| Phong cách | Nền | Hợp với |
-|---|---|---|
-| **Neon tối** | Dữ liệu OpenStreetMap tông tối | Hook, video viral |
-| **Bản đồ sáng** | Dữ liệu OpenStreetMap | Giải thích vị trí rõ ràng |
-| **Ảnh vệ tinh hoặc flycam** | Ảnh bạn có quyền dùng | Cho thấy khu đất thật |
+Khách mua nhà hỏi đi hỏi lại mấy câu: nhà nằm đâu, ra đường lớn bao xa, về trung tâm mất bao lâu, xung quanh có gì? Gửi định vị thì khách lười mở, giải thích bằng chữ thì dài. Một video bản đồ 10 giây trả lời hết các câu đó, nhưng trước đây phải biết dựng video hoặc thuê người.
 
-Skill cũng edit được clip tự quay: phiên âm, cắt khoảng lặng, phụ đề, thẻ thông số, chèn cảnh bản đồ và làm bản so sánh trước/sau.
+## 📌 Tính năng nổi bật
 
-## Ảnh vệ tinh
+- **Tuyến đường tự vẽ** — lấy tuyến thật từ OSRM, camera bám đầu tuyến, kết thúc bằng khung toàn cảnh.
+- **Ghim và nhãn km/phút** — thời gian luôn ghi là ước tính, không tự bịa số.
+- **Địa điểm nổi tiếng kiểu Google Maps** — ga metro, trung tâm thương mại, bệnh viện hiện dần khi tuyến đi ngang qua.
+- **Tên phường theo dữ liệu mới** — nhãn lấy từ OpenStreetMap, nhiều khu vực đã theo tên sau sáp nhập 7/2025.
+- **Ảnh vệ tinh hoặc flycam** — đưa ảnh bạn có quyền dùng, công cụ `scripts/prepare_imagery.py` căn đúng toạ độ.
+- **Edit clip tự quay bằng Remotion** — phiên âm tiếng Việt, cắt khoảng lặng, phụ đề nhấn từ khoá, thẻ thông số, chèn cảnh bản đồ, bản so sánh trước/sau.
+- **Prompt cho AI khác** — có sẵn [prompt dựng bằng HyperFrames](references/prompt-chatgpt-hyperframes.md) cho ChatGPT hoặc Codex.
 
-Skill có chế độ ảnh vệ tinh nhưng **không kèm sẵn ảnh và không tự tải ảnh**, vì nhiều dịch vụ không cho thu thập tile hay dùng lại ảnh trong video quảng cáo. Bạn đưa một ảnh được phép dùng, Claude căn đúng toạ độ bằng `scripts/prepare_imagery.py` rồi vẽ tuyến lên đó.
+## 🎨 Ba phong cách bản đồ
+
+Đổi phong cách chỉ là đổi một tham số, dữ liệu và camera giữ nguyên.
+
+| Phong cách | Nền | Màu tuyến | Hợp với |
+| --- | --- | --- | --- |
+| `neon` | OpenStreetMap tông tối `#0A0E13` | `#C6FF3D` | Hook, video viral |
+| `osm` | OpenStreetMap nền sáng `#F3F0EA` | `#1A73E8` | Giải thích vị trí rõ ràng |
+| `satellite` | Ảnh vệ tinh hoặc flycam của bạn | `#38F2FF` | Cho thấy khu đất thật |
+
+Màu nằm trong `STYLES` ở đầu file [`render3.py`](templates/three-styles/render3.py), đổi theo thương hiệu của bạn được.
+
+### Về ảnh vệ tinh
+
+Skill **không kèm ảnh và không tự tải ảnh**, vì nhiều dịch vụ không cho thu thập tile hoặc dùng lại ảnh trong video quảng cáo. Repo cũng chưa có demo vệ tinh vì lý do này.
 
 | Nguồn ảnh | Độ nét | Lưu ý |
-|---|---|---|
-| Ảnh flycam của bạn, chụp thẳng xuống | Rất nét | Cách đơn giản nhất. Cần đúng quy định bay tại khu vực. |
-| Ảnh mua từ nhà cung cấp | Tuỳ gói | Đọc giấy phép có cho dùng trong video quảng cáo hay không. |
-| [OpenAerialMap](https://openaerialmap.org/legal) | Tuỳ khu vực | CC BY 4.0, phải ghi nguồn. Nhiều nơi chưa có ảnh. Trang điều khoản không nói rõ về thương mại. |
-| [Sentinel-2 cloudless](https://eox.at/2025/03/sentinel-2-cloudless-2024/) của EOX | Khoảng 10 m/điểm ảnh | Chỉ hợp cảnh toàn khu. Dịch vụ miễn phí dành cho mục đích phi thương mại, dùng thương mại cần giấy phép của EOX. |
+| --- | --- | --- |
+| Flycam của bạn, chụp thẳng xuống | Rất nét | Cách đơn giản nhất, cần đúng quy định bay tại khu vực |
+| Ảnh mua từ nhà cung cấp | Tuỳ gói | Đọc kỹ giấy phép về video quảng cáo |
+| [OpenAerialMap](https://openaerialmap.org/legal) | Tuỳ khu vực | CC BY 4.0, phải ghi nguồn, nhiều nơi chưa có ảnh, điều khoản không nói rõ về thương mại |
+| [Sentinel-2 cloudless](https://eox.at/2025/03/sentinel-2-cloudless-2024/) | Khoảng 10 m/điểm ảnh | Chỉ hợp cảnh toàn khu, dịch vụ miễn phí dành cho phi thương mại |
 
-[Google Earth Studio](https://www.google.com/earth/studio/faq/) không cấp giấy phép dùng ảnh Google Earth cho ứng dụng thương mại. Không nên dùng cho quảng cáo bán nhà.
+[Google Earth Studio](https://www.google.com/earth/studio/faq/) không cấp giấy phép dùng ảnh cho ứng dụng thương mại, nên không hợp với video quảng cáo bán nhà.
 
-## Remotion
+## 📁 Cấu trúc repo
 
-[Remotion](https://www.remotion.dev) là công cụ dựng video bằng mã nguồn. Claude viết cảnh, Remotion xuất thành MP4. Skill dùng Remotion cho phần edit clip, nằm trong `templates/remotion-edit/`. Phần video bản đồ 10 giây không cần Remotion.
+```
+map-route-video/
+├── SKILL.md                     ← hướng dẫn Claude đọc khi chạy skill
+├── README.md, LICENSE           ← bạn đang ở đây
+├── docs/                        ← GIF và ảnh dùng trong README
+├── references/
+│   ├── data-sourcing.md         ← nguồn dữ liệu, điều khoản, cách xử lý khi mạng bị chặn
+│   └── prompt-chatgpt-hyperframes.md
+├── scripts/
+│   ├── prepare_imagery.py       ← căn ảnh vệ tinh/flycam theo toạ độ
+│   ├── transcribe_vi.py         ← phiên âm tiếng Việt
+│   ├── silence_cut.py           ← dò khoảng lặng
+│   ├── tile_math.py             ← tính toán tile bản đồ
+│   └── *.browser.js             ← lấy dữ liệu bản đồ qua trình duyệt
+└── templates/
+    ├── three-styles/            ← video bản đồ 3 phong cách (Python + ffmpeg)
+    └── remotion-edit/           ← edit clip môi giới (Remotion)
+```
 
-Skill đã kèm template nên chạy được ngay. Muốn Claude hiểu Remotion sâu hơn khi tự chỉnh cảnh, cài thêm [skill chính thức của Remotion](https://www.remotion.dev/docs/ai/skills):
+## 🧰 Yêu cầu hệ thống
+
+1. **Claude có chạy được code**, ví dụ Claude Code hoặc ứng dụng Claude có tính năng tạo file. Claude cần mở được nguồn bản đồ, trực tiếp hoặc qua trình duyệt.
+2. **Python 3** — tải tại [python.org](https://www.python.org/downloads/).
+3. **FFmpeg** trong `PATH` — tải tại [ffmpeg.org](https://ffmpeg.org/download.html).
+4. **Thư viện Python:** `pip install pycairo mapbox-vector-tile pillow`.
+
+Chỉ cần edit clip thì cài thêm:
+
+5. **Node.js** — tải tại [nodejs.org](https://nodejs.org/en/download).
+6. **Phiên âm:** `pip install faster-whisper numpy`.
+
+> **Giấy phép Remotion:** Remotion không dùng MIT. Theo [FAQ của Remotion](https://www.remotion.dev/docs/license/faq), cá nhân và tổ chức từ 3 người trở xuống được dùng miễn phí, kể cả thương mại. Công ty trên 3 người cần mua Company License. Phần video bản đồ 10 giây không dùng Remotion.
+
+## 🚀 Bắt đầu
+
+### 1. Cài skill
+
+**Claude Code:**
+
+```bash
+git clone https://github.com/thailinhprod/map-route-video.git ~/.claude/skills/map-route-video
+```
+
+**Ứng dụng Claude:** tải repo dạng ZIP rồi thêm vào phần Skills.
+
+Muốn Claude hiểu Remotion sâu hơn khi tự chỉnh cảnh, cài thêm [skill chính thức của Remotion](https://www.remotion.dev/docs/ai/skills). Bước này không bắt buộc.
 
 ```bash
 npx skills add remotion-dev/skills
 ```
 
-**Remotion không dùng giấy phép MIT.** Theo [FAQ của Remotion](https://www.remotion.dev/docs/license/faq), cá nhân và tổ chức từ 3 người trở xuống được dùng miễn phí, kể cả thương mại. Công ty trên 3 người cần mua Company License, kể cả khi chỉ một người dùng. Hãy kiểm tra lại trang này trước khi dùng cho công ty.
+### 2. Tạo video bản đồ
 
-## Cài đặt
+Nhắn cho Claude như nói chuyện bình thường:
 
-1. Tải repo về và giải nén, hoặc chạy `git clone`.
-2. Thêm skill vào Claude:
-   - **Claude Code:** chép thư mục vào `~/.claude/skills/map-route-video/`.
-   - **Ứng dụng Claude:** nén thư mục thành file `.zip` rồi thêm vào phần Skills.
-3. Cài công cụ trên máy chạy skill:
-
-```bash
-pip install pycairo mapbox-vector-tile pillow
-# Cần thêm ffmpeg. Phần edit clip cần thêm Node.js, faster-whisper và numpy.
 ```
-
-## Cách dùng
-
-Nhắn cho Claude như sau:
-
-```text
 Làm video bản đồ từ Chợ Bến Thành đến Landmark 81, kiểu nền tối.
 ```
 
-```text
-Đây là clip giới thiệu căn nhà của tôi. Hãy cắt khoảng lặng, thêm phụ đề,
-thẻ thông số và cảnh bản đồ. Tôi xác nhận giá và diện tích như sau: ...
+Claude sẽ tìm toạ độ, lấy tuyến, tải dữ liệu bản đồ (có hỏi trước khi tải file) rồi xuất MP4.
+
+### 3. Dùng ảnh vệ tinh hoặc flycam
+
+Chuẩn bị ảnh nhìn thẳng xuống, hướng bắc ở trên, biết toạ độ bốn mép, rồi nhắn:
+
+```
+Dùng ảnh flycam này làm nền. Mép tây 106.70, nam 10.74, đông 106.81, bắc 10.86.
+Tôi có quyền dùng ảnh, ghi nguồn là: Ảnh: Tên của bạn.
 ```
 
-## Giới hạn cần biết
+### 4. Edit clip môi giới
 
-- **Claude phải chạy được code và mở được nguồn bản đồ.** Nhiều môi trường chặn các nguồn này, khi đó skill lấy dữ liệu qua trình duyệt. Bản Claude chỉ chat là chưa đủ.
-- **Thời gian di chuyển là ước tính,** chưa tính kẹt xe.
+```
+Đây là clip giới thiệu căn nhà của tôi. Hãy cắt khoảng lặng, thêm phụ đề,
+thẻ thông số và cảnh bản đồ. Giá và diện tích tôi xác nhận như sau: ...
+```
+
+Clip đưa vào phải là clip bạn có quyền dùng. Claude sẽ hỏi lại mọi con số trước khi đưa lên video.
+
+### 5. Chạy thủ công
+
+Không dùng Claude cũng render được nếu bạn đã có `scene.json` và dữ liệu nền:
+
+```bash
+cd templates/three-styles
+python3 render3.py neon scene.json out
+python3 render3.py osm scene.json out
+python3 render3.py satellite scene.json out
+python3 render3.py osm scene.json out 1.2,5.5,9.5   # chỉ xuất ảnh tĩnh để kiểm tra
+```
+
+Mẫu ở [`example_scene.json`](templates/three-styles/example_scene.json). Phần edit clip xem [`templates/remotion-edit/README.md`](templates/remotion-edit/README.md).
+
+## ⚠️ Giới hạn cần biết
+
+- **Bản Claude chỉ chat là chưa đủ**, vì skill cần chạy code và xuất file.
+- **Thời gian di chuyển là ước tính** khi đường thông thoáng, chưa tính kẹt xe.
+- **Ghim có thể là vị trí tương đối** nếu số hẻm không có trên bản đồ. Video sẽ ghi rõ điều này.
 - **Chưa có chế độ quy hoạch.** Lớp quy hoạch không có trong OpenStreetMap.
-- **Clip đưa vào phải là clip bạn có quyền dùng.** Mọi con số trên video cần được bạn xác nhận.
+- **Dữ liệu bản đồ có thể chưa cập nhật đủ** ở mọi khu vực. Hãy kiểm tra tên đường, tên phường trước khi đăng.
 
-## Giấy phép và nguồn dữ liệu
+## 🤝 Đóng góp
 
-Mã nguồn của skill dùng giấy phép MIT, xem `LICENSE`. Giấy phép này không áp dụng cho Remotion và dữ liệu bản đồ:
+Mọi góp ý đều được hoan nghênh, bạn cứ mở issue hoặc gửi PR. Khi đóng góp, xin giữ một nguyên tắc: không đưa vào repo công cụ tải dữ liệu trái điều khoản của nhà cung cấp, cũng như clip hay thông tin thật của khách hàng.
 
-- Dữ liệu © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), giấy phép ODbL. Video phải giữ dòng ghi nguồn.
-- Tuyến đường: [OSRM](https://github.com/Project-OSRM/osrm-backend/wiki/Api-usage-policy). Nền bản đồ: [OpenFreeMap](https://openfreemap.org).
-- Ảnh nền theo giấy phép của nguồn ảnh bạn dùng.
+## 🔗 Xem thêm
 
-Bạn tự kiểm tra điều khoản của từng nguồn trước khi đăng. Phần này chỉ để tham khảo, không phải tư vấn pháp lý.
+- 👤 **Tác giả:** [Thái Linh trên Facebook](https://facebook.com/thailinhprod)
+- 💬 **Group hỗ trợ:** [tham gia group Facebook](https://www.facebook.com/groups/1408241059869300/) để hỏi cách dùng và xem các anh chị khác làm gì
 
-## Tác giả và hỗ trợ
+## 📄 License
 
-Skill do [Thái Linh](https://facebook.com/thailinhprod) xây dựng. Cần hỗ trợ hoặc muốn trao đổi cách dùng, mời vào [group Facebook](https://www.facebook.com/groups/1408241059869300/).
+Mã nguồn của skill dùng giấy phép [MIT](LICENSE). Giấy phép này không áp dụng cho các thành phần sau:
+
+- **Remotion** theo [giấy phép riêng](https://www.remotion.dev/docs/license/faq).
+- **Dữ liệu bản đồ** © [OpenStreetMap contributors](https://www.openstreetmap.org/copyright), giấy phép ODbL. Video phải giữ dòng ghi nguồn.
+- **Tuyến đường** từ [OSRM](https://github.com/Project-OSRM/osrm-backend/wiki/Api-usage-policy), **nền bản đồ** từ [OpenFreeMap](https://openfreemap.org).
+- **Ảnh nền** theo giấy phép của nguồn ảnh bạn dùng.
+
+Bạn tự kiểm tra điều khoản từng nguồn trước khi đăng. Phần này chỉ để tham khảo, không phải tư vấn pháp lý.
